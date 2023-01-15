@@ -57,6 +57,7 @@ export default {
     objectSizeBorderRadius: '3px',
     objectSizeFontStyle: 'italic',
     objectSizeMargin: '0px 6px 0px 0px',
+    sensitiveDataClassesMargin: '0px 6px 0px 6px',
 
     clipboardCursor: 'pointer',
     clipboardCheckMarginLeft: '-12px',

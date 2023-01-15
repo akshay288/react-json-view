@@ -1,5 +1,6 @@
 import React from 'react';
 import { polyfill } from 'react-lifecycles-compat';
+import Regexp from './components/DataTypes/Regexp';
 import JsonViewer from './components/JsonViewer';
 import AddKeyRequest from './components/ObjectKeyModal/AddKeyRequest';
 import ValidationFailure from './components/ValidationFailure';
@@ -47,7 +48,7 @@ class ReactJsonView extends React.PureComponent {
         indentWidth: 4,
         enableClipboard: true,
         displayObjectSize: true,
-        displayDataTypes: true,
+        displayDataTypes: false,
         onEdit: false,
         onDelete: false,
         onAdd: false,
@@ -56,7 +57,16 @@ class ReactJsonView extends React.PureComponent {
         style: {},
         validationMessage: 'Validation Error',
         defaultValue: null,
-        displayArrayKey: true
+        displayArrayKey: true,
+        regexToSensitiveData: [
+            [/^root\.parent\.sibling1$/, ['Credit Card', 'Phone Number']],
+            [/^root\.parent\.sibling2$/, ['SSN']],
+            [/^root\.string_number$/, ['SSN']]
+        ],
+        regexToNumSensitiveData: [
+            [/^root$/, 4],
+            [/^root\.parent$/, 3]
+        ]
     };
 
     // will trigger whenever setState() is called, or parent passes in new props.

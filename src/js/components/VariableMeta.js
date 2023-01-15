@@ -11,6 +11,20 @@ import { RemoveCircle as Remove, AddCircle as Add } from './icons';
 import Theme from './../themes/getStyle';
 
 export default class extends React.PureComponent {
+    getNumPIIFields = () => {
+        const { numPIIFields, theme } = this.props;
+        if (numPIIFields > 0) {
+            return (
+                <span
+                    class="num-pii-fields"
+                    {...Theme(theme, 'num-pii-fields')}
+                >
+                    {numPIIFields} PII Field{numPIIFields === 1 ? '' : 's'}
+                </span>
+            );
+        }
+    };
+
     getObjectSize = () => {
         const { size, theme, displayObjectSize } = this.props;
         if (displayObjectSize) {
@@ -126,6 +140,7 @@ export default class extends React.PureComponent {
             >
                 {/* size badge display */}
                 {this.getObjectSize()}
+                {this.getNumPIIFields()}
                 {/* copy to clipboard icon */}
                 {enableClipboard ? (
                     <CopyToClipboard

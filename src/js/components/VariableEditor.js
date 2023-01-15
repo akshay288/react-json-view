@@ -26,6 +26,7 @@ import { Edit, CheckCircle, RemoveCircle as Remove } from './icons';
 
 //theme
 import Theme from './../themes/getStyle';
+import { getSensitiveDataClasses } from '../helpers/matchSensitiveData';
 
 class VariableEditor extends React.PureComponent {
     constructor(props) {
@@ -58,6 +59,17 @@ class VariableEditor extends React.PureComponent {
             quotesOnKeys
         } = this.props;
         const { editMode } = this.state;
+        const path = `${this.props.parent_stack.map(e => e[0]).join('.')}.${
+            this.props.variable.name
+        }`;
+        const sensitiveData = getSensitiveDataClasses(
+            path,
+            this.props.regexToSensitiveData
+        );
+        const objectCls =
+            sensitiveData.length > 0 ? 'sensitive-object-name' : 'object-name';
+        const arrayCls =
+            sensitiveData.length > 0 ? 'sensitive-array-key' : 'array-key';
         return (
             <div
                 {...Theme(theme, 'objectKeyVal', {
@@ -75,7 +87,7 @@ class VariableEditor extends React.PureComponent {
                 {type == 'array' ? (
                     displayArrayKey ? (
                         <span
-                            {...Theme(theme, 'array-key')}
+                            {...Theme(theme, arrayCls)}
                             key={variable.name + '_' + namespace}
                         >
                             {variable.name}
@@ -85,7 +97,7 @@ class VariableEditor extends React.PureComponent {
                 ) : (
                     <span>
                         <span
-                            {...Theme(theme, 'object-name')}
+                            {...Theme(theme, objectCls)}
                             class="object-key"
                             key={variable.name + '_' + namespace}
                         >

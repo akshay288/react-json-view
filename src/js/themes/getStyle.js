@@ -135,6 +135,18 @@ const getDefaultThemeStyling = theme => {
                 opacity: constants.keyOpacityHover
             }
         },
+        'sensitive-object-name': {
+            display: 'inline-block',
+            color: colors.keyColor,
+            letterSpacing: constants.keyLetterSpacing,
+            fontStyle: constants.keyFontStyle,
+            verticalAlign: constants.keyVerticalAlign,
+            opacity: '0.65',
+            backgroundColor: '#E53E3E',
+            ':hover': {
+                opacity: constants.keyOpacityHover
+            }
+        },
         'array-key': {
             display: 'inline-block',
             color: colors.arrayKeyColor,
@@ -146,11 +158,37 @@ const getDefaultThemeStyling = theme => {
                 opacity: constants.keyOpacityHover
             }
         },
+        'sensitive-array-key': {
+            display: 'inline-block',
+            color: colors.arrayKeyColor,
+            letterSpacing: constants.keyLetterSpacing,
+            fontStyle: constants.keyFontStyle,
+            verticalAlign: constants.keyVerticalAlign,
+            opacity: '0.65',
+            backgroundColor: '#E53E3E',
+            ':hover': {
+                opacity: constants.keyOpacityHover
+            }
+        },
         'object-size': {
             color: colors.objectSize,
             borderRadius: constants.objectSizeBorderRadius,
             fontStyle: constants.objectSizeFontStyle,
             margin: constants.objectSizeMargin,
+            cursor: 'default'
+        },
+        'num-pii-fields': {
+            color: '#E53E3E',
+            borderRadius: constants.objectSizeBorderRadius,
+            fontStyle: constants.objectSizeFontStyle,
+            margin: constants.objectSizeMargin,
+            cursor: 'default'
+        },
+        'sensitive-data-classes': {
+            color: '#E53E3E',
+            borderRadius: constants.objectSizeBorderRadius,
+            fontStyle: constants.objectSizeFontStyle,
+            margin: constants.sensitiveDataClassesMargin,
             cursor: 'default'
         },
         'data-type-label': {

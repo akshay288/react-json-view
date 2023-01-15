@@ -7,6 +7,7 @@ import Theme from './../../themes/getStyle';
 
 //attribute store for storing collapsed state
 import AttributeStore from './../../stores/ObjectAttributes';
+import { getSensitiveDataClasses } from '../../helpers/matchSensitiveData';
 
 export default class extends React.PureComponent {
     constructor(props) {
@@ -58,6 +59,14 @@ export default class extends React.PureComponent {
             }
         }
 
+        const path = `${this.props.parent_stack.map(e => e[0]).join('.')}.${
+            this.props.variable.name
+        }`;
+        const sensitiveData = getSensitiveDataClasses(
+            path,
+            props.regexToSensitiveData
+        );
+
         return (
             <div {...Theme(theme, 'string')}>
                 <DataTypeLabel type_name={type_name} {...props} />
@@ -68,6 +77,14 @@ export default class extends React.PureComponent {
                 >
                     "{value}"
                 </span>
+                {sensitiveData.length > 0 ? (
+                    <span
+                        class="sensitive-data-classes"
+                        {...Theme(props.theme, 'sensitive-data-classes')}
+                    >
+                        {sensitiveData.join(' ')}
+                    </span>
+                ) : null}
             </div>
         );
     }

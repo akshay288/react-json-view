@@ -18,6 +18,7 @@ import { CollapsedIcon, ExpandedIcon } from './../ToggleIcons';
 
 //theme
 import Theme from './../../themes/getStyle';
+import { getTotalSenstiveData } from '../../helpers/matchSensitiveData';
 
 //increment 1 with each nested object & array
 const DEPTH_INCREMENT = 1;
@@ -132,8 +133,23 @@ class RjvObject extends React.PureComponent {
     getObjectMetaData = src => {
         const { rjvId, theme } = this.props;
         const { size, hovered } = this.state;
+        let path = this.props.name || "root"
+        if (this.props.parent_stack) {
+            path = `${this.props.parent_stack.map(e => e[0]).join('.')}.${
+                this.props.name
+            }`;
+        }
+        const totalSensitiveData = getTotalSenstiveData(
+            path,
+            this.props.regexToNumSensitiveData
+        );
         return (
-            <VariableMeta rowHovered={hovered} size={size} {...this.props} />
+            <VariableMeta
+                rowHovered={hovered}
+                size={size}
+                numPIIFields={totalSensitiveData}
+                {...this.props}
+            />
         );
     };
 
@@ -239,8 +255,10 @@ class RjvObject extends React.PureComponent {
 
     renderObjectContents = (variables, props) => {
         const {
+            name,
             depth,
             parent_type,
+            parent_stack,
             index_offset,
             groupArraysAfterLength,
             namespace
@@ -252,6 +270,8 @@ class RjvObject extends React.PureComponent {
         if (this.props.sortKeys && object_type !== 'array') {
             keys = keys.sort();
         }
+
+        const parent_name = name || 'root';
 
         keys.forEach(name => {
             variable = new JsonVariable(name, variables[name]);
@@ -271,6 +291,9 @@ class RjvObject extends React.PureComponent {
                         namespace={namespace.concat(variable.name)}
                         parent_type={object_type}
                         {...props}
+                        parent_stack={(parent_stack || []).concat([
+                            [parent_name, object_type]
+                        ])}
                     />
                 );
             } else if (variable.type === 'array') {
@@ -293,6 +316,9 @@ class RjvObject extends React.PureComponent {
                         type="array"
                         parent_type={object_type}
                         {...props}
+                        parent_stack={(parent_stack || []).concat([
+                            [parent_name, object_type]
+                        ])}
                     />
                 );
             } else {
@@ -304,6 +330,9 @@ class RjvObject extends React.PureComponent {
                         namespace={namespace}
                         type={this.props.type}
                         {...props}
+                        parent_stack={(parent_stack || []).concat([
+                            [parent_name, object_type]
+                        ])}
                     />
                 );
             }
