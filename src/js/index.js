@@ -58,15 +58,8 @@ class ReactJsonView extends React.PureComponent {
         validationMessage: 'Validation Error',
         defaultValue: null,
         displayArrayKey: true,
-        regexToSensitiveData: [
-            [/^root\.parent\.sibling1$/, ['Credit Card', 'Phone Number']],
-            [/^root\.parent\.sibling2$/, ['SSN']],
-            [/^root\.string_number$/, ['SSN']]
-        ],
-        regexToNumSensitiveData: [
-            [/^root$/, 4],
-            [/^root\.parent$/, 3]
-        ]
+        regexToSensitiveData: [],
+        regexToNumSensitiveData: []
     };
 
     // will trigger whenever setState() is called, or parent passes in new props.
