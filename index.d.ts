@@ -141,6 +141,9 @@ export interface ReactJsonViewProps {
    * Default: null
    */
   defaultValue?: TypeDefaultValue | TypeDefaultValue[] | null;
+
+  regexToSensitiveData?: [Regexp, string[]][]
+  regexToNumSensitiveData?: [Regexp, number][]
 }
 
 export interface OnCopyProps {
